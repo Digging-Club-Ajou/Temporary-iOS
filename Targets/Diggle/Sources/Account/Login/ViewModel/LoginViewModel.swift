@@ -8,9 +8,26 @@
 
 import Foundation
 import SwiftUI
+import KakaoSDKUser
 
 final class LoginViewModel: ObservableObject {
     @Published private(set) var model = LoginModel()
+    
+    func onKakaoLoginButtonTapped() {
+        if UserApi.isKakaoTalkLoginAvailable() {
+            UserApi.shared.loginWithKakaoTalk { oAuthToken, error in
+                self.getKakaoUserInfo()
+            }
+        } else {
+            debugPrint("kakao login disable")
+        }
+    }
+    
+    func getKakaoUserInfo() {
+        UserApi.shared.me { (user, error) in
+            
+        }
+    }
 }
 
 extension LoginViewModel {

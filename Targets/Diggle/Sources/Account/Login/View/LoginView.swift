@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
     
@@ -39,10 +40,17 @@ struct LoginView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             
             Button {
-                
+                viewModel.onKakaoLoginButtonTapped()
             } label: {
                 Image("kakaoLoginMedium")
             }
+            
+            SignInWithAppleButton { request in
+                debugPrint("request")
+            } onCompletion: { result in
+                debugPrint(result)
+            }
+            .frame(width: 300, height: 50)
         }
     }
 }
