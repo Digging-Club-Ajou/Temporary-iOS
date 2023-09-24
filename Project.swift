@@ -5,7 +5,7 @@ import MyPlugin
 /*
                 +-------------+
                 |             |
-                |     App     | Contains TuistStudy App target and TuistStudy unit-test target
+                |     App     | Contains Diggle App target and Diggle unit-test target
                 |             |
          +------+-------------+-------+
          |         depends on         |
@@ -24,6 +24,6 @@ import MyPlugin
 let localHelper = LocalHelper(name: "MyPlugin")
 
 // Creates our project using a helper function defined in ProjectDescriptionHelpers
-let project = Project.app(name: "TuistStudy",
+let project = Project.app(name: "Diggle",
                           platform: .iOS,
-                          additionalTargets: ["TuistStudyKit", "TuistStudyUI"])
+                          additionalTargets: ["DiggleKit", "DiggleUI"])
