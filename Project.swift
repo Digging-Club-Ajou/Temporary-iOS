@@ -42,13 +42,25 @@ let target = Target(
     ]
 )
 
-let project = Project(name: "Fecit",
-                           organizationName: "DiggleAjou",
-                           packages: [
-                            .remote(url: "https://github.com/kakao/kakao-ios-sdk.git",
-                                    requirement: .upToNextMajor(from: "2.17.0")),
-                            .remote(url: "https://github.com/pointfreeco/swift-composable-architecture.git", requirement: .upToNextMajor(from: "1.2.0"))
-                           ],
-                           settings: nil,
-                           targets: [target]
+let testTarget = Target(
+    name: "DiggleTests",
+    platform: .iOS,
+    product: .unitTests,
+    bundleId: "com.diggle.ajou.test",
+    sources: ["Targets/Diggle/Tests/**"],
+    dependencies: [
+        .package(product: "ComposableArchitecture"),
+        .target(name: "Diggle")
+    ]
+)
+
+let project = Project(name: "Diggle",
+                      organizationName: "DiggleAjou",
+                      packages: [
+                        .remote(url: "https://github.com/kakao/kakao-ios-sdk.git",
+                                requirement: .upToNextMajor(from: "2.17.0")),
+                        .remote(url: "https://github.com/pointfreeco/swift-composable-architecture.git", requirement: .upToNextMajor(from: "1.2.0"))
+                      ],
+                      settings: nil,
+                      targets: [target, testTarget]
 )
