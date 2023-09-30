@@ -10,6 +10,7 @@ import SwiftUI
 
 extension Color {
     static let digglePink = Color("digglePink")
+    static let gray999999 = Color("gray999999")
 }
 
 
