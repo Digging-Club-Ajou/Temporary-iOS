@@ -38,7 +38,9 @@ let target = Target(
         .package(product: "KakaoSDKAuth"),
         .package(product: "KakaoSDKCommon"),
         .package(product: "KakaoSDKUser"),
-        .package(product: "ComposableArchitecture")
+        .package(product: "ComposableArchitecture"),
+        .package(product: "SwiftUIIntrospect"),
+        .package(product: "Kingfisher")
     ]
 )
 
@@ -57,9 +59,11 @@ let testTarget = Target(
 let project = Project(name: "Diggle",
                       organizationName: "DiggleAjou",
                       packages: [
+                        .remote(url: "https://github.com/siteline/swiftui-introspect.git", requirement: .upToNextMajor(from: "1.1.0")),
                         .remote(url: "https://github.com/kakao/kakao-ios-sdk.git",
                                 requirement: .upToNextMajor(from: "2.17.0")),
-                        .remote(url: "https://github.com/pointfreeco/swift-composable-architecture.git", requirement: .upToNextMajor(from: "1.2.0"))
+                        .remote(url: "https://github.com/pointfreeco/swift-composable-architecture.git", requirement: .upToNextMajor(from: "1.2.0")),
+                        .remote(url: "https://github.com/onevcat/Kingfisher.git", requirement: .upToNextMajor(from: "7.9.1"))
                       ],
                       settings: nil,
                       targets: [target, testTarget]
