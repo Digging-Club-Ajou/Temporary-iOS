@@ -8,4 +8,4 @@
 
 import Foundation
 
-let kakaoNativeAppKey = "c64d15fb701b8676b26639ef0575da63"
+let kakaoNativeAppKey = "f0a05ad99d4fcc956de2e527f885a734"
