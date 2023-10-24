@@ -1,4 +1,5 @@
 import SwiftUI
+import ComposableArchitecture
 import KakaoSDKCommon
 import KakaoSDKAuth
 
@@ -14,15 +15,15 @@ struct DiggleApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            DiggleTabView()
-                .environmentObject(diggleTabManager)
-                .environmentObject(accountManager)
-                .environmentObject(navigateUploadManager)
+            LoginView()
                 .onOpenURL {
                     if AuthApi.isKakaoTalkLoginUrl($0) {
                         _ = AuthController.handleOpenUrl(url: $0)
                     }
                 }
+                .environmentObject(diggleTabManager)
+                .environmentObject(accountManager)
+                .environmentObject(navigateUploadManager)
         }
     }
 }

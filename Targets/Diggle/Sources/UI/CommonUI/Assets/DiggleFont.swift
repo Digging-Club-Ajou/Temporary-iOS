@@ -10,9 +10,9 @@ import Foundation
 import SwiftUI
 
 enum DiggleFont {
-    
     case bo14
     case bo18
+    case bo20
     case bo24
     case re12
     case re14
@@ -25,6 +25,8 @@ enum DiggleFont {
             return Font.system(size: 18, weight: .bold)
         case .bo18:
             return Font.system(size: 18, weight: .bold)
+        case .bo20:
+            return Font.system(size: 20, weight: .bold)
         case .bo24:
             return Font.system(size: 24, weight: .bold)
         case .re12:

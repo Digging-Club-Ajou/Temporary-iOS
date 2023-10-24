@@ -12,7 +12,7 @@ import SwiftUI
 struct TextOverlayStyle: ButtonStyle {
     
     let text: String
-    let font: DiggleFont = .bo20
+    let font: DiggleFont = .bo18
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
