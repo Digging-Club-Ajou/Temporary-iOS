@@ -47,59 +47,61 @@ struct FavoriteGenreView: View {
     var body: some View {
         
         WithViewStore(store, observe: { $0 }) { viewStore in
-            VStack {
-                ScrollView(.vertical, showsIndicators: false) {
-                    
-                    VStack(spacing: 10) {
-                        Text("좋아하는 장르를 선택해주세요")
-                            .font(DiggleFont.re18)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, 50)
+            NavigationStack {
+                VStack {
+                    ScrollView(.vertical, showsIndicators: false) {
                         
-                        Text("선택한 장르를 기반으로 맞춤형 플레이리스트를 제공합니다")
-                            .font(DiggleFont.re14)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(.gray)
-                        
-                        LazyVGrid(columns: imageColumns, spacing: 20) {
-                            ForEach(viewStore.selectedGenres) { genre in
-                                Button {
-                                    viewStore.send(.onGenreTapped(genre))
-                                } label: {
-                                    Image(genre.imageSource)
-                                        .resizable()
-                                        .aspectRatio(CGSize(width: 1, height: 1),
-                                                     contentMode: .fit)
-                                        .clipShape(Circle())
-                                        .opacity(genre.opacity)
-                                }
-                                .overlay {
-                                    Circle()
-                                        .stroke(lineWidth: 2)
-                                        .foregroundColor(.digglePink)
-                                        .presentIf(genre.isOverlayViewPresented)
-                                }
-                                .overlay(alignment: .bottomTrailing) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .presentIf(genre.isOverlayViewPresented)
-                                        .foregroundColor(.digglePink)
-                                        .background(Color.white.clipShape(Circle()))
+                        VStack(spacing: 10) {
+                            Text("좋아하는 장르를 선택해주세요")
+                                .font(DiggleFont.re18)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.top, 50)
+                            
+                            Text("선택한 장르를 기반으로 맞춤형 플레이리스트를 제공합니다")
+                                .font(DiggleFont.re14)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .foregroundColor(.gray)
+                            
+                            LazyVGrid(columns: imageColumns, spacing: 20) {
+                                ForEach(viewStore.selectedGenres) { genre in
+                                    Button {
+                                        viewStore.send(.onGenreTapped(genre))
+                                    } label: {
+                                        Image(genre.imageSource)
+                                            .resizable()
+                                            .aspectRatio(CGSize(width: 1, height: 1),
+                                                         contentMode: .fit)
+                                            .clipShape(Circle())
+                                            .opacity(genre.opacity)
+                                    }
+                                    .overlay {
+                                        Circle()
+                                            .stroke(lineWidth: 2)
+                                            .foregroundColor(.digglePink)
+                                            .presentIf(genre.isOverlayViewPresented)
+                                    }
+                                    .overlay(alignment: .bottomTrailing) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .presentIf(genre.isOverlayViewPresented)
+                                            .foregroundColor(.digglePink)
+                                            .background(Color.white.clipShape(Circle()))
+                                    }
                                 }
                             }
                         }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
-                }
-                
-                Button {
                     
-                } label: {
-                    DiggleShape.roundedRectangle
-                        .foregroundColor(viewStore.selectedGenres.buttonForegroundColor)
+                    Button {
+                        
+                    } label: {
+                        DiggleShape.roundedRectangle() 
+                            .foregroundColor(viewStore.selectedGenres.buttonForegroundColor)
+                    }
+                    .buttonStyle(TextOverlayStyle(text: viewStore.selectedGenres.buttonText))
                 }
-                .buttonStyle(TextOverlayStyle(text: viewStore.selectedGenres.buttonText))
             }
         }
     }

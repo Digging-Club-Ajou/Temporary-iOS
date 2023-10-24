@@ -7,7 +7,19 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum DiggleImage: String {
     case genre
+    case location
+    case border_camera
+    case xmark
+    case exclamation_red
+    case check_blue
+}
+
+extension Image {
+    init(_ diggleImage: DiggleImage) {
+        self.init(diggleImage.rawValue)
+    }
 }
