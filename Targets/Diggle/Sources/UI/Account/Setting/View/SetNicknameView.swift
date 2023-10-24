@@ -33,9 +33,9 @@ struct SetNicknameFeature: Reducer {
             var foregroundColor: Color {
                 switch self {
                 case .disable:
-                    return .redD56461
+                    return .redFF006B
                 case .enable:
-                    return .blue6A8EF0
+                    return .blue00C2FF
                 case .emptyOrChecking:
                     return .clear
                 }
