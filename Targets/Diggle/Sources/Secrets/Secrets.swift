@@ -8,4 +8,6 @@
 
 import Foundation
 
-let kakaoNativeAppKey = "f0a05ad99d4fcc956de2e527f885a734"
+let kakaoNativeAppKey = "c64d15fb701b8676b26639ef0575da63"
+let kakaoRedirectURI = "https://diggle.com/oauth"
+let kakaoRestAPIKey = "590bb77122a44a817acaabfe3a5ea8fc"
