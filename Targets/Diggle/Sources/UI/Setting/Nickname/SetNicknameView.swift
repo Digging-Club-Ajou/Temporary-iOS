@@ -52,7 +52,7 @@ struct SetNicknameView: View {
                         .foregroundColor(.digglePink)
                 }
                 
-                Text(viewModel.setNicknameModel.guideText)
+                Text(viewModel.setNicknameModel.nicknameGuideText)
                     .foregroundColor(viewModel.setNicknameModel.guideTextForegroundColor)
                     .font(.re12)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -74,6 +74,12 @@ struct SetNicknameView: View {
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity)
         .customTitle("")
+        .onAppear {
+            viewModel.onSetNicknameViewAppear()
+        }
+        .onDisappear {
+            viewModel.onSetNicknameViewOnDisappear()
+        }
     }
     
     @ViewBuilder

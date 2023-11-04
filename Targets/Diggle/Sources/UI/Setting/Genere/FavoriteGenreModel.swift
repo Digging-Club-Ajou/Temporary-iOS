@@ -48,7 +48,21 @@ struct FavoriteGenreModel {
         return "다음 \(count)/\(maxCount)"
     }
     
-    var maxCount: Int {
+    private var maxCount: Int {
         5
+    }
+    
+    var favoriteGenreRequest: FavoriteGenereRequest {
+        var request = FavoriteGenereRequest()
+        request.indie = genres[0].isSelected
+        request.ballade = genres[1].isSelected
+        request.dance = genres[2].isSelected
+        request.rockMetal = genres[3].isSelected
+        request.rbAndSoul = genres[4].isSelected
+        request.rapHiphop = genres[5].isSelected
+        request.folkBlues = genres[6].isSelected
+        request.pop = genres[7].isSelected
+        request.ostAndMusical = genres[8].isSelected
+        return request
     }
 }

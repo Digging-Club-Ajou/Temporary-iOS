@@ -11,35 +11,39 @@ import SwiftUI
 struct SetNicknameModel {
     var nickname: String = ""
     var nicknameState: NicknameState = .empty
-    
-    var guideText: String {
-        switch nicknameState {
-        case .empty:
-            return "영문, 숫자, 밑줄, 마침표 중 두 가지 이상을 조합한 2~20자를 지원합니다."
-        case .disable:
-            return "다른 유저와 중복되는 아이디입니다."
-        case .enable:
-            return "사용 가능한 아이디입니다."
-        }
-    }
-    
-    var guideTextForegroundColor: Color {
-        switch nicknameState {
-        case .empty:
-            return .clear
-        case .disable:
-            return .red
-        case .enable:
-            return .blue
-        }
-    }
-    
+    var nicknameGuideText: String = ""
+    var guideTextForegroundColor: Color = .clear
+
     var isCompleteButtonDisable: Bool {
         nicknameState != .enable
     }
     
     var completeButtonForgroundColor: Color {
         isCompleteButtonDisable ? .grayE9E9EA : .pinkFEC4E4
+    }
+    
+    var nicknameValidatinoRequest: ValidateNicknameRequest {
+        ValidateNicknameRequest(nickname: nickname)
+    }
+    
+    var postNicknameRequest: PostNicknameRequest {
+        PostNicknameRequest(nickname: nickname)
+    }
+    
+    mutating func presentNicknameValidationResponse(_ response: ValidateNicknameResponse) {
+        switch response.statusCode {
+        case "200":
+            guideTextForegroundColor = .blue
+            nicknameState = .enable
+        case "400":
+            guideTextForegroundColor = .red
+            nicknameState = .disable
+        default:
+            guideTextForegroundColor = .red
+            nicknameState = .disable
+        }
+        
+        nicknameGuideText = response.message
     }
 }
 

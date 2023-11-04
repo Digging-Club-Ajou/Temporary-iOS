@@ -21,56 +21,26 @@ struct ArtistModel {
     var foreignManArtistst: [ArtistCellModel] = ArtistCellModel.foreginManArtists()
     var foreignWoanArtistst: [ArtistCellModel] = ArtistCellModel.foreginWomanArtists()
     
+    private var allArtists: [ArtistCellModel] {
+        var artists: [ArtistCellModel] = []
+        artists.append(contentsOf: indySoloArtists)
+        artists.append(contentsOf: indyGroupArtists)
+        artists.append(contentsOf: boySoloArtists)
+        artists.append(contentsOf: boyGroupArtists)
+        artists.append(contentsOf: girlSoloArtists)
+        artists.append(contentsOf: girlGroupArtists)
+        artists.append(contentsOf: foreignManArtistst)
+        artists.append(contentsOf: foreignWoanArtistst)
+        return artists
+    }
+    
     var selectedCount: Int {
         var count: Int = 0
-        for indySoloArtist in indySoloArtists {
-            if indySoloArtist.isSelected {
+        for artist in allArtists {
+            if artist.isSelected {
                 count += 1
             }
         }
-        
-        for indyGroupArtist in indyGroupArtists {
-            if indyGroupArtist.isSelected {
-                count += 1
-            }
-        }
-        
-        for girlGroupArtist in girlGroupArtists {
-            if girlGroupArtist.isSelected {
-                count += 1
-            }
-        }
-        
-        for girlSoloArtist in girlSoloArtists {
-            if girlSoloArtist.isSelected {
-                count += 1
-            }
-        }
-        
-        for boySoloArtist in boySoloArtists {
-            if boySoloArtist.isSelected {
-                count += 1
-            }
-        }
-        
-        for boyGroupArtist in boyGroupArtists {
-            if boyGroupArtist.isSelected {
-                count += 1
-            }
-        }
-        
-        for man in foreignManArtistst {
-            if man.isSelected {
-                count += 1
-            }
-        }
-        
-        for woman in foreignWoanArtistst {
-            if woman.isSelected {
-                count += 1
-            }
-        }
-        
         return count
     }
     
@@ -96,5 +66,15 @@ struct ArtistModel {
     
     private var maxCount: Int {
         5
+    }
+    
+    var favoriteArtistRequest: FavoriteArtistRequest {
+        var selectedArtists: [String] = []
+        for artist in allArtists {
+            if artist.isSelected {
+                selectedArtists.append(artist.text)
+            }
+        }
+        return FavoriteArtistRequest(artistNames: selectedArtists)
     }
 }

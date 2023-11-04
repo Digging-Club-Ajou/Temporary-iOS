@@ -11,7 +11,7 @@ import SwiftUI
 import IdentifiedCollections
 
 struct FavoriteGenreCellModel: Identifiable, Equatable {
-    let id: String = UUID().uuidString
+    let id: String
     let imageSource: String
     let text: String
     var isSelected: Bool = false
@@ -26,25 +26,25 @@ struct FavoriteGenreCellModel: Identifiable, Equatable {
     
     static func favoriteGenres() -> [FavoriteGenreCellModel] {
         [
-            .init(imageSource: Image.Genre.indy.rawValue,
+            .init(id: "indie", imageSource: Image.Genre.indy.rawValue,
                   text: "인디"),
-            .init(imageSource: Image.Genre.ballad.rawValue,
+            .init(id: "ballade", imageSource: Image.Genre.ballad.rawValue,
                   text: "발라드"),
-            .init(imageSource: Image.Genre.dance.rawValue,
+            .init(id: "dance", imageSource: Image.Genre.dance.rawValue,
                   text: "댄스"),
             
-            .init(imageSource: Image.Genre.metal.rawValue,
+                .init(id: "rockMetal", imageSource: Image.Genre.metal.rawValue,
                   text: "록/메탈"),
-            .init(imageSource: Image.Genre.rb_and_soul.rawValue,
+            .init(id: "rbAndSoul", imageSource: Image.Genre.rb_and_soul.rawValue,
                   text: "R&B/Soul"),
-            .init(imageSource: Image.Genre.hiphop_and_rap.rawValue,
+            .init(id: "rapHiphop", imageSource: Image.Genre.hiphop_and_rap.rawValue,
                   text: "힙합/랩"),
             
-            .init(imageSource: Image.Genre.fork_and_blues.rawValue,
+                .init(id: "folkBlues", imageSource: Image.Genre.fork_and_blues.rawValue,
                   text: "포크/블루스"),
-            .init(imageSource: Image.Genre.pop.rawValue,
+            .init(id: "pop", imageSource: Image.Genre.pop.rawValue,
                   text: "POP"),
-            .init(imageSource: Image.Genre.ost_and_musical.rawValue,
+            .init(id: "ostAndMusical", imageSource: Image.Genre.ost_and_musical.rawValue,
                   text: "OST/뮤지컬"),
         ]
     }
