@@ -26,8 +26,6 @@ final class AccountService: AccountServiceProtocol {
                                         method: .get,
                                         encoding: JSONEncoding.default)
             .serializingDecodable(KakaoLoginResposne.self).response
-        
-        debugPrint(response.debugDescription)
     }
     
     func kakaoLogin(kakaoAccessToken: String) async throws -> KakaoLoginResposne {

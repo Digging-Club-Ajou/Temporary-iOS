@@ -9,7 +9,7 @@
 import SwiftUI
 
 protocol SearchViewModel: ObservableObject {
-    var searchModel: SearchModel { get }
+    var searchModel: any SearchModel { get }
     func onSearchEndButtonTapped()
     func onSearchSubmit() 
     var textBinding: Binding<String> { get }
@@ -20,7 +20,7 @@ final class NullSearchViewModel: SearchViewModel {
         
     }
     
-    @Published var searchModel: SearchModel = DefaultSearchModel()
+    @Published var searchModel: any SearchModel = DefaultSearchModel()
     
     func onSearchEndButtonTapped() {
         

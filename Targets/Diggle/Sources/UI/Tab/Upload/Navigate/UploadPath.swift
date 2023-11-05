@@ -9,5 +9,9 @@
 import SwiftUI
 
 enum UploadPath: Hashable {
-    case albumCover(Data)
+    case album(Data)
+    case card
+    case searchMusic
+    case preview(MelodyCardModel, SettingLocationModel)
+    case location(MelodyCardModel)
 }

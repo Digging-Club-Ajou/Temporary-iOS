@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SearchModel {
+protocol SearchModel: Hashable {
     var placeholder: String { get set }
     var text: String { get set }
     var isSearchEndButtonPreseneted: Bool { get set }

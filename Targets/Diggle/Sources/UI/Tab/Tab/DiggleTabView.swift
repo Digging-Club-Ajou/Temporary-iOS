@@ -28,7 +28,7 @@ struct DiggleTabView: View {
                     DiggleTabModel.upload.image(diggleTabManager.selection)
                 }
             
-            ProfileView()
+            Text("Profile")
                 .tag(DiggleTabModel.profile)
                 .tabItem {
                     DiggleTabModel.profile.image(diggleTabManager.selection)

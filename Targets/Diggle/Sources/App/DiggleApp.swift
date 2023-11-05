@@ -8,7 +8,7 @@ struct DiggleApp: App {
     
     @StateObject private var diggleTabManager = DiggleTabManager.shared
     @StateObject private var accountManager = AccountManager.shared
-    @StateObject private var navigateUploadManager = NavigateUploadManager.shared
+    @StateObject private var navigateUploadManager = UploadNavigateManager.shared
     @StateObject private var accountNavigateManager = AccountNavigateManager.shared
     @StateObject private var displayManager = DisplayManager.shared
     

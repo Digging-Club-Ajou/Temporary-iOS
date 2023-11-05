@@ -10,4 +10,8 @@ import Foundation
 
 struct StatusCodeResposne: Decodable {
     let code: Int
+    
+    static func stub() -> StatusCodeResposne {
+        StatusCodeResposne(code: 200)
+    }
 }
