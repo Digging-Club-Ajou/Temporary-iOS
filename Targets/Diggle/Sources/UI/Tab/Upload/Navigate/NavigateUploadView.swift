@@ -11,7 +11,7 @@ import SwiftUIIntrospect
 
 struct NavigateUploadView: View {
     
-    @EnvironmentObject var navigateUploadManager: NavigateUploadManager
+    @EnvironmentObject var navigateUploadManager: UploadNavigateManager
     
     var body: some View {
         NavigationStack(path: $navigateUploadManager.paths) {
@@ -19,8 +19,22 @@ struct NavigateUploadView: View {
                 .tint(.primary)
                 .navigationDestination(for: UploadPath.self) {
                     switch $0 {
-                    case let .albumCover(data):
+                    case let .album(data):
                         AlbumCoverView(data: data)
+                    case .card:
+                        UploadMelodyCardView()
+                    case .searchMusic:
+                        EmptyView()
+                    case let .preview(melodayCardModel,
+                                      settingLocationModel):
+                        MelodyCardPreviewView(
+                            melodyCardModel: melodayCardModel,
+                            settingLocationModel: settingLocationModel
+                        )
+                    case .location(let melodyCardModel):
+                        SettingLocationView(
+                            melodyCardModel: melodyCardModel
+                        )
                     }
                 }
         }
