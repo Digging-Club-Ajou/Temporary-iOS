@@ -24,11 +24,11 @@ final class SettingViewModel: ObservableObject {
     private let nicknameValidateRequestFlag = 0
     private let triggerOriginValue = 5
     private var isNicknameValidationRequestEnabeld: Bool {
-        nicknameValidateRequestTrigger == nicknameValidateRequestFlag
+        nicknameValidateRequestTrigger == nicknameValidateRequestFlag  && setNicknameModel.nicknameState == .waiting
     }
 
     init(accountService: AccountServiceProtocol = AccountService()) {
-        self.accountService = AccountStubService()
+        self.accountService = accountService
         nicknameValidateRequestTrigger = triggerOriginValue
     }
     
@@ -82,6 +82,7 @@ extension SettingViewModel {
     func onChageOfNickname(_ nickname: String) {
         nicknameValidateRequestTrigger = triggerOriginValue
         accountService.cancelNicknameValidation()
+        setNicknameModel.nicknameState = .waiting
     }
     
     func onSetNicknameCompleteButtonTapped() {
@@ -100,9 +101,12 @@ extension SettingViewModel {
         Task {
             do {
                 let response = try await accountService.validateNickname(request: setNicknameModel.nicknameValidatinoRequest)
+                debugPrint(response)
+                setNicknameModel.nicknameState = .enable
                 setNicknameModel.presentNicknameValidationResponse(response)
             } catch {
-                
+                setNicknameModel.nicknameState = .disable
+                debugPrint(error)
             }
         }
     }

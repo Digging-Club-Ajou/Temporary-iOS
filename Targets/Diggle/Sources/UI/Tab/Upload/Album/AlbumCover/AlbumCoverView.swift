@@ -87,7 +87,7 @@ struct AlbumCoverView: View {
     
     private func completeButton() -> some View {
          Button {
-            
+             viewModel.onAlbumCompleteButtonTapped()
         } label: {
             Text("완료")
                 .font(.re14)

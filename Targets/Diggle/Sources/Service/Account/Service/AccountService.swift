@@ -10,6 +10,22 @@ import Alamofire
 import KakaoSDKUser
 
 final class AccountService: AccountServiceProtocol {
+    func getUserInfo() async throws -> UserInfoResponse {
+        let url = "\(baseURL)/api/members"
+        let header = try RequestHeaderProvider.shared.accessToken()
+        let result = await AF.request(url,
+                                      method: .get,
+                                      headers: header)
+            .serializingDecodable(UserInfoResponse.self).result
+        
+        switch result {
+        case .success(let response):
+            return response
+        case .failure(let failure):
+            throw failure
+        }
+    }
+    
     static let shared = AccountService()
     
     private var nicknameValidationTask: Task<ValidateNicknameResponse, Error>?
@@ -47,7 +63,7 @@ final class AccountService: AccountServiceProtocol {
     
     func postFavoriteArtist(aritsts: FavoriteArtistRequest) async throws {
         let url = "\(baseURL)/api/artists"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
         let result = await AF.request(url,
                                         method: .post,
                                         parameters: aritsts,
@@ -65,7 +81,7 @@ final class AccountService: AccountServiceProtocol {
     
     func postFavroiteGenere(genres: FavoriteGenereRequest) async throws {
         let url = "\(baseURL)/api/genres"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
         let result = await AF.request(url,
                                         method: .post,
                                         parameters: genres,
@@ -83,7 +99,7 @@ final class AccountService: AccountServiceProtocol {
     
     func postNickname(request: PostNicknameRequest) async throws -> PostNicknameResponse {
         let url = "\(baseURL)/api/nickname"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
         let result = await AF.request(url,
                                         method: .post,
                                         parameters: request,
@@ -101,22 +117,27 @@ final class AccountService: AccountServiceProtocol {
 
     func validateNickname(request: ValidateNicknameRequest) async throws -> ValidateNicknameResponse {
         let url = "\(baseURL)/api/nickname-validation"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
+        
         let result = await AF.request(url,
                                         method: .post,
                                         parameters: request,
                                         encoder: JSONParameterEncoder.default,
                                         headers: header)
-            .serializingDecodable(ValidateNicknameResponse.self).result
+            .serializingDecodable(ValidateNicknameResponse.self)
+            .response
+        
+        debugPrint(result.debugDescription)
         
         nicknameValidationTask = Task {
-            switch result {
+            switch result.result {
             case .success(let response):
                 return response
             case .failure(let failure):
                 throw failure
             }
         }
+        
         
         if let nicknameValidationTask = nicknameValidationTask {
             return try await nicknameValidationTask.value

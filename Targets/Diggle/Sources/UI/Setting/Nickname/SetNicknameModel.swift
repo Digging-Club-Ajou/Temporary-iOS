@@ -52,5 +52,6 @@ extension SetNicknameModel {
         case empty
         case enable
         case disable
+        case waiting
     }
 }

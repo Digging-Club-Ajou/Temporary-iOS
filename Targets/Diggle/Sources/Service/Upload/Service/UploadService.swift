@@ -10,9 +10,30 @@ import Alamofire
 import Foundation
 
 final class UploadService: UploadServiceProtocol {
+    
+    private init() { }
+    
+    func verifyAlbumExistence() async throws -> AlbumExistenceResponse {
+        let url = "\(baseURL)/api/albums-validation"
+        let header = try RequestHeaderProvider.shared.accessToken()
+        let result = await AF.request(url,
+                                      method: .post,
+                                      headers: header)
+            .serializingDecodable(AlbumExistenceResponse.self)
+            .result
+        
+        switch result {
+        case .success(let response):
+            return response
+        case .failure(let failure):
+            throw failure
+        }
+
+    }
+    
     func searchLocation(query: String, x: String, y: String) async throws -> SearchLocationResponse {
         let url = "\(baseURL)/api/location?query=\(query)&x=\(x)&y=\(y)"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
         let result = await AF.request(url,
                                       method: .get,
                                       headers: header)
@@ -31,7 +52,7 @@ final class UploadService: UploadServiceProtocol {
     
     func validateAlbumName(_ request: ValidateAlbumNameRequest) async throws -> StatusCodeResposne {
         let url = "\(baseURL)/api/albums/name-validation"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
         let result = await AF.request(url,
                                       method: .post,
                                       parameters: request,
@@ -49,7 +70,7 @@ final class UploadService: UploadServiceProtocol {
     
     func searchMusicBy(keyword: String) async throws -> SearchMusicResponse{
         let url = "\(baseURL)/api/musics?search=\(keyword)"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
         let result = await AF.request(url,
                                       method: .get,
                                       headers: header)
@@ -65,7 +86,7 @@ final class UploadService: UploadServiceProtocol {
     
     func postMelodyAlbum(request: PostAlbumRequest) async throws {
         let url = "\(baseURL)/api/albums"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
         
         var response = await AF.upload(multipartFormData: { data in
             data.append(request.imageData,
@@ -76,13 +97,16 @@ final class UploadService: UploadServiceProtocol {
             data.append(Data(request.albumName.utf8),
                         withName: "albumNameRequest")
         }, to: url, method: .post, headers: header)
-        
-            .serializingDecodable(String.self)
+            .serializingDecodable(ServerError.self)
             .response
+        
+        debugPrint(response.result)
         
         let serverError = response.data.flatMap {
             try? JSONDecoder().decode(ServerError.self, from: $0)
         }
+        
+        debugPrint(serverError)
         
         guard let serverError = serverError else { throw ServiceError.decode }
         
@@ -91,7 +115,7 @@ final class UploadService: UploadServiceProtocol {
     
     func postMelodyCard(request: PostMelodayCardRequest) async throws {
         let url = "\(baseURL)/api/melody-cards"
-        let header = RequestHeaderProvider.shared.accessToken()
+        let header = try RequestHeaderProvider.shared.accessToken()
         
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: request.melodyCardRequest)

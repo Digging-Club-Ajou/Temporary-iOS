@@ -9,6 +9,7 @@
 import Foundation
 
 protocol UploadServiceProtocol {
+    func verifyAlbumExistence() async throws -> AlbumExistenceResponse
     func postMelodyAlbum(request: PostAlbumRequest) async throws
     func postMelodyCard(request: PostMelodayCardRequest) async throws
     func searchMusicBy(keyword: String) async throws -> SearchMusicResponse

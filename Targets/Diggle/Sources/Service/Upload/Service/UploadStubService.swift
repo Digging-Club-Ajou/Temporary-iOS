@@ -9,6 +9,10 @@
 import Foundation
 
 final class UploadStubService: UploadServiceProtocol {
+    func verifyAlbumExistence() async throws -> AlbumExistenceResponse {
+        .stub()
+    }
+    
     func searchLocation(query: String, x: String, y: String) async throws -> SearchLocationResponse {
         .stub()
     }

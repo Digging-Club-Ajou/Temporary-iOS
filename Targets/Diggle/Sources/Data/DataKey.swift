@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+enum DataKey: String {
+    case accessToken
+}
