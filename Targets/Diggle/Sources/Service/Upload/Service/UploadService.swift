@@ -53,8 +53,11 @@ final class UploadService: UploadServiceProtocol {
     
     func searchLocation(query: String, x: String, y: String) async throws -> SearchLocationResponse {
         let url = "\(baseURL)/api/location?query=\(query)&x=\(x)&y=\(y)"
+        guard let encodedURL = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        else { throw ServiceError.urlEncode }
+        
         let header = try RequestHeaderProvider.shared.accessToken()
-        let result = await AF.request(url,
+        let result = await AF.request(encodedURL,
                                       method: .get,
                                       headers: header)
             .serializingDecodable(SearchLocationResponse.self).result
