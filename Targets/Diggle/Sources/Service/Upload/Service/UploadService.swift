@@ -9,9 +9,29 @@
 import Alamofire
 import Foundation
 
-final class UploadService: UploadServiceProtocol {
-    
+final class UploadService: UploadServiceProtocol {    
     private init() { }
+    
+    func findMusic(with: String) async throws -> MusicResponse {
+        let url = "\(baseURL)/api/musics?search=\(with)"
+        guard let encodedURL = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        else { throw ServiceError.urlEncode }
+
+        let header = try RequestHeaderProvider.shared.accessToken()
+        let result = await AF.request(encodedURL,
+                                      method: .get,
+                                      headers: header)
+            .serializingDecodable(MusicResponse.self)
+            .result
+        
+        switch result {
+        case .success(let response):
+            return response
+        case .failure(let failure):
+            throw failure
+        }
+
+    }
     
     func verifyAlbumExistence() async throws -> AlbumExistenceResponse {
         let url = "\(baseURL)/api/albums-validation"
@@ -59,22 +79,6 @@ final class UploadService: UploadServiceProtocol {
                                       encoder: JSONParameterEncoder.default,
                                       headers: header)
             .serializingDecodable(StatusCodeResposne.self).result
-        
-        switch result {
-        case .success(let response):
-            return response
-        case .failure(let failure):
-            throw failure
-        }
-    }
-    
-    func searchMusicBy(keyword: String) async throws -> SearchMusicResponse{
-        let url = "\(baseURL)/api/musics?search=\(keyword)"
-        let header = try RequestHeaderProvider.shared.accessToken()
-        let result = await AF.request(url,
-                                      method: .get,
-                                      headers: header)
-            .serializingDecodable(SearchMusicResponse.self).result
         
         switch result {
         case .success(let response):

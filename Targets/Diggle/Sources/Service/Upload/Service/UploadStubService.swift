@@ -9,6 +9,10 @@
 import Foundation
 
 final class UploadStubService: UploadServiceProtocol {
+    func findMusic(with: String) async throws -> MusicResponse {
+        .stub()
+    }
+    
     func verifyAlbumExistence() async throws -> AlbumExistenceResponse {
         .stub()
     }
@@ -23,10 +27,6 @@ final class UploadStubService: UploadServiceProtocol {
     
     func postMelodyCard(request: PostMelodayCardRequest) async throws {
         
-    }
-    
-    func searchMusicBy(keyword: String) async throws -> SearchMusicResponse {
-        .stub()
     }
     
     func validateAlbumName(_ request: ValidateAlbumNameRequest) async throws -> StatusCodeResposne {

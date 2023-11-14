@@ -1,21 +1,22 @@
 //
-//  SearchResponseResponse.swift
+//  MusicRequest.swift
 //  Diggle
 //
-//  Created by 노우영 on 2023/11/05.
+//  Created by 노우영 on 2023/11/14.
 //  Copyright © 2023 DiggleAjou. All rights reserved.
 //
 
 import Foundation
 
-struct SearchMusicResponse: Decodable {
+struct MusicResponse: Decodable {
     let spotifySearchDtos: [SpotifySearchDto]
     
-    static func stub() -> SearchMusicResponse {
-        SearchMusicResponse(spotifySearchDtos: [.stub(), .stub()])
+    static func stub() -> MusicResponse {
+        MusicResponse(spotifySearchDtos: [.stub(), .stub()])
     }
 }
 
+// MARK: - SpotifySearchDto
 struct SpotifySearchDto: Decodable {
     let artistName, songTitle: String
     let imageURL, previewURL: String
