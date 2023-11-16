@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct PostMelodayCardRequest {
+struct PostMelodayCardRequest: Encodable {
     let melodyCardRequest: Information
     let melodyImage: Data
 }
 
 extension PostMelodayCardRequest {
-    struct Information {
+    struct Information: Encodable {
         let artistName: String
         let songTitle: String
         let genre: String
@@ -22,5 +22,6 @@ extension PostMelodayCardRequest {
         let address: String
         let cardDescription: String
         let color: String
+        let albumCoverImageURL: String
     }
 }

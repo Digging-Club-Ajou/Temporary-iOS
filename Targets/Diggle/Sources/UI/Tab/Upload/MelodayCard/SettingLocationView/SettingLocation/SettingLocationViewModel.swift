@@ -64,7 +64,9 @@ extension SettingLocationViewModel: SearchViewModel {
                     LocationCellModel(locationResponse: $0)
                 }
             } catch {
+                #if DEBUG
                 debugPrint("location search error: \(error)")
+                #endif
             }
         }
     }

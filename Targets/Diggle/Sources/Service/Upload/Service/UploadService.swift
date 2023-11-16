@@ -125,9 +125,9 @@ final class UploadService: UploadServiceProtocol {
         let header = try RequestHeaderProvider.shared.accessToken()
         
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: request.melodyCardRequest)
+            let jsonData = try JSONEncoder().encode(request)
             
-            var response = await AF.upload(multipartFormData: { data in
+            let response = await AF.upload(multipartFormData: { data in
                 data.append(request.melodyImage,
                             withName: "melodyImage",
                             fileName: UUID().uuidString,
@@ -139,16 +139,17 @@ final class UploadService: UploadServiceProtocol {
                             mimeType: "application/json")
                 
             }, to: url, method: .post, headers: header)
-                .serializingDecodable(String.self)
+                .serializingString()
                 .response
             
-            let serverError = response.data.flatMap {
-                try? JSONDecoder().decode(ServerError.self, from: $0)
-            }
+            let _ = try response.result.get()
             
-            guard let serverError = serverError else { throw ServiceError.decode }
+            guard let data = response.data
+            else { throw ServiceError.responseDataEmpty }
             
-            throw serverError
+            let serverError = try JSONDecoder().decode(ServerError.self, from: data)
+        } catch AFError.ResponseSerializationFailureReason.inputDataNilOrZeroLength {
+            
         } catch {
             throw error
         }

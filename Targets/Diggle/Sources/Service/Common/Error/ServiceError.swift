@@ -11,4 +11,5 @@ import Foundation
 enum ServiceError: Error {
     case decode
     case urlEncode
+    case responseDataEmpty
 }

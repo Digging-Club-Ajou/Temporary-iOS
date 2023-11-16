@@ -17,6 +17,10 @@ final class UploadNavigateManager: ObservableObject {
         paths.append(path)
     }
     
+    func clear() {
+        paths = .init()
+    }
+    
     func popLast() {
         paths.removeLast()
     }
