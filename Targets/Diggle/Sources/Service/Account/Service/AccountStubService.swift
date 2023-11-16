@@ -9,6 +9,10 @@
 import Foundation
 
 final class AccountStubService: AccountServiceProtocol {
+    func getUserInfo() async throws -> UserInfoResponse {
+        return .stub()
+    }
+    
     func cancelNicknameValidation() {
         
     }

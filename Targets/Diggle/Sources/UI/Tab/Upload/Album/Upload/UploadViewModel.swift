@@ -10,11 +10,23 @@ import Foundation
 
 final class UploadViewModel: ObservableObject {
     
+    private let uploadService: UploadServiceProtocol =  UploadService.shared
     private let navigateUploadManager: UploadNavigateManager = .shared
     @Published var isCameraViewPresented: Bool = false
     
     func onCameraButtonTapped() {
-        isCameraViewPresented = true 
+        Task {
+            do {
+                let response = try await uploadService.verifyAlbumExistence()
+                if response.alreadyExist {
+                    navigateUploadManager.navigateTo(.searchMusic)
+                } else {
+                    isCameraViewPresented = true
+                }
+            } catch {
+                debugPrint("error: \(error)")
+            }
+        }
     }
 }
 

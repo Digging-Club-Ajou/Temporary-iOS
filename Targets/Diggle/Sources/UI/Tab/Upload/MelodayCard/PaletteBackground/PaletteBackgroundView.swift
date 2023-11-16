@@ -27,7 +27,7 @@ struct PaletteBackgroundView: View {
         .customTitle("배경 색상 선택")
         .toolbar {
             Button {
-                
+                viewModel.onPaletteCompleteButtonTapped()
             } label: {
                 Text("완료")
                     .foregroundColor(.primary)

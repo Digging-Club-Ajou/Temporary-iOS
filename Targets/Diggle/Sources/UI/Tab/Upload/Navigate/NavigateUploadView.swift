@@ -24,7 +24,7 @@ struct NavigateUploadView: View {
                     case .card:
                         UploadMelodyCardView()
                     case .searchMusic:
-                        EmptyView()
+                        MusicSelectionView()
                     case let .preview(melodayCardModel,
                                       settingLocationModel):
                         MelodyCardPreviewView(

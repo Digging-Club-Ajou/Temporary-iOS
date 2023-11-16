@@ -12,7 +12,7 @@ final class DisplayManager: ObservableObject {
     
     static let shared = DisplayManager()
     
-    @Published private(set) var model: DisplayState = .setting
+    @Published private(set) var model: DisplayState = .main
     
     func display(_ view: DisplayState) {
         model = view

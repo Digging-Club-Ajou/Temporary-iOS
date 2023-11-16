@@ -18,10 +18,11 @@ final class MelodyCardPreviewViewModel: ObservableObject {
         .init(melodyCardRequest: .init(artistName: melodyCardModel.songCellModel.singer,
                                        songTitle: melodyCardModel.songCellModel.title,
                                        genre: melodyCardModel.songCellModel.genre,
-                                       previewUrl: melodyCardModel.songCellModel.imageURL,
+                                       previewUrl: "",
                                        address: settingLocationModel.selectedLocation?.locationText ?? "",
                                        cardDescription: melodyCardModel.text,
-                                       color: "#\(melodyCardModel.background.rgb)"),
+                                       color: "#\(melodyCardModel.background.rgb)",
+                                       albumCoverImageURL: melodyCardModel.songCellModel.imageURL),
               melodyImage: melodyCardModel.imageData ?? .empty)
     }
     
@@ -33,8 +34,14 @@ final class MelodyCardPreviewViewModel: ObservableObject {
     
     func onMelodyCardPreviewCompleteButtonTapped() {
         Task {
-            try? await uploadService.postMelodyCard(request: postMelodyCardRequest)
-            UploadNavigateManager.shared.popLast()
+            do {
+                try await uploadService.postMelodyCard(request: postMelodyCardRequest)
+                UploadNavigateManager.shared.clear()
+            } catch {
+                #if DEBUG
+                debugPrint(error)
+                #endif
+            }
         }
     }
 }

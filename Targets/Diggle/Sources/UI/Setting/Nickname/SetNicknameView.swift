@@ -91,6 +91,8 @@ struct SetNicknameView: View {
             Image(.check_blue)
         case .disable:
             Image(.exclamation_red)
+        case .waiting:
+            ProgressView()
         }
     }
 }

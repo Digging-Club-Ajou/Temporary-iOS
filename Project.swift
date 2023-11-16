@@ -23,7 +23,10 @@ let infoPlist: [String: InfoPlist.Value] = [
     "CFBundleShortVersionString": "1.0",
     "CFBundleVersion": "1",
     "UIMainStoryboardFile": "",
-    "UILaunchStoryboardName": "LaunchScreen"
+    "UILaunchStoryboardName": "LaunchScreen",
+    "NSCameraUsageDescription": "‘앨범’, ‘멜로디카드’ 등의 게시물 등록을 위해 카메라에 접근하도록 허용합니다.",
+    "NSLocationWhenInUseUsageDescription" : "‘앨범’, ‘멜로디카드’ 등의 게시물 등록을 위해 위치 권한에 접근하도록 허용합니다.",
+    "NSPhotoLibraryUsageDescription": "‘앨범’, ‘멜로디카드’ 등의 게시물 등록을 위해 사진에 접근하도록 허용합니다."
 ]
 
 let target = Target(

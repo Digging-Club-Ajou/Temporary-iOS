@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 final class SettingLocationViewModel {
     @Published var settingLocationModel = SettingLocationModel()
@@ -50,13 +51,22 @@ extension SettingLocationViewModel: SearchViewModel {
     func onSearchSubmit() {
         Task {
             do {
-                let response = try await uploadService.searchLocation(query: settingLocationModel.text, x: "0", y: "0")
+                let manager = CLLocationManager()
+                manager.startUpdatingLocation()
+                guard let location = manager.location else { return }
+                debugPrint("location: \(location)")
+                
+                let response = try await uploadService.searchLocation(query: settingLocationModel.text,
+                                                                      x: "\(location.coordinate.latitude)",
+                                                                      y: "\(location.coordinate.longitude)")
                 
                 settingLocationModel.locations = response.locationResponses.map {
                     LocationCellModel(locationResponse: $0)
                 }
             } catch {
-                
+                #if DEBUG
+                debugPrint("location search error: \(error)")
+                #endif
             }
         }
     }

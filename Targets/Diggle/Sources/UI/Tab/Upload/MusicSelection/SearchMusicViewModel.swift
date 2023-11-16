@@ -25,14 +25,15 @@ final class SearchMusicViewModel: ObservableObject {
         musicSelectionModel.focusField = nil
     }
     
+    @MainActor
     func onMusicSelectionSubmit() {
         Task {
             do {
                 musicSelectionModel.state = .searchEnded
-                let response = try await uploadService.searchMusicBy(keyword: musicSelectionModel.searchText)
+                let response = try await uploadService.findMusic(with: musicSelectionModel.searchText)
                 musicSelectionModel.songs = response.spotifySearchDtos.map { SongCellModel(dto: $0) }
             } catch {
-                
+                debugPrint("onMusicSelectionSubmit: \(error)")
             }
         }
     }

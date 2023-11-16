@@ -11,7 +11,8 @@ import Alamofire
 final class RequestHeaderProvider {
     static let shared = RequestHeaderProvider()
     
-    func accessToken() -> HTTPHeaders {
-        return ["AccessToken": "Tempory token"]
+    func accessToken() throws -> HTTPHeaders {
+        let accessToken = try DataManager.shared.getAccessToken()
+        return ["AccessToken": accessToken]
     }
 }

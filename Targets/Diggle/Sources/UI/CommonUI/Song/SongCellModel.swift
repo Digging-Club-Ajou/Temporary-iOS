@@ -25,7 +25,7 @@ struct SongCellModel: Identifiable, Hashable {
 
 extension SongCellModel {
     init(dto: SpotifySearchDto) {
-        imageURL = dto.previewURL
+        imageURL = dto.imageURL
         title = dto.songTitle
         singer = dto.artistName
     }

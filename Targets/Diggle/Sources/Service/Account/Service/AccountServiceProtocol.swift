@@ -18,5 +18,7 @@ protocol AccountServiceProtocol {
     func cancelNicknameValidation() 
     
     @discardableResult
-    func postNickname(request: PostNicknameRequest) async throws -> PostNicknameResponse 
+    func postNickname(request: PostNicknameRequest) async throws -> PostNicknameResponse
+    
+    func getUserInfo() async throws -> UserInfoResponse
 }
