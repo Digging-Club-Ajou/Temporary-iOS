@@ -107,13 +107,9 @@ final class UploadService: UploadServiceProtocol {
             .serializingDecodable(ServerError.self)
             .response
         
-        debugPrint(response.result)
-        
         let serverError = response.data.flatMap {
             try? JSONDecoder().decode(ServerError.self, from: $0)
         }
-        
-        debugPrint(serverError)
         
         guard let serverError = serverError else { throw ServiceError.decode }
         
@@ -148,8 +144,9 @@ final class UploadService: UploadServiceProtocol {
             else { throw ServiceError.responseDataEmpty }
             
             let serverError = try JSONDecoder().decode(ServerError.self, from: data)
-        } catch AFError.ResponseSerializationFailureReason.inputDataNilOrZeroLength {
-            
+        } catch let afError as AFError {
+            guard afError.isResponseSerializationError else { return }
+            throw afError
         } catch {
             throw error
         }
